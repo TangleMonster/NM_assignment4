@@ -1,0 +1,45 @@
+%! Author = 50669
+%! Date = 3/18/2026
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+
+% Document
+\begin{document}
+    \section*{Question 1}
+    Let
+    \[
+        x_j=-1+jh,\qquad h=\frac{2}{n+1},\qquad j=0,1,\dots,n+1,
+    \]
+    and let $u\in C^4([-1,1])$ with $u(-1)=u(1)=0$.
+    For interior nodes $j=1,\dots,n$, define
+    \[
+        V_j:=\frac{u(x_{j-1})-2u(x_j)+u(x_{j+1})}{h^2}.
+    \]
+    Using Taylor expansion around xj,
+    \begin{align*}
+        u(x_{j+1}) &= u(x_j)+h u'(x_j)+\frac{h^2}{2}u''(x_j)+\frac{h^3}{6}u^{(3)}(x_j)+\frac{h^4}{24}u^{(4)}(\xi_j^+),\\
+        u(x_{j-1}) &= u(x_j)-h u'(x_j)+\frac{h^2}{2}u''(x_j)-\frac{h^3}{6}u^{(3)}(x_j)+\frac{h^4}{24}u^{(4)}(\xi_j^-),
+    \end{align*}
+    for some $\xi_j^\pm$ between $x_{j-1}$ and $x_{j+1}$. Adding both lines and subtracting $2u(x_j)$ gives
+    \[
+        u(x_{j-1})-2u(x_j)+u(x_{j+1})=h^2u''(x_j)+\frac{h^4}{24}\big(u^{(4)}(\xi_j^-)+u^{(4)}(\xi_j^+)\big).
+    \]
+    Hence
+    \[
+        V_j-u''(x_j)=\frac{h^2}{24}\big(u^{(4)}(\xi_j^-)+u^{(4)}(\xi_j^+)\big).
+    \]
+    Since $u^{(4)}$ is continuous, so there exist $M>0$ such that
+    $|u^{(4)}(x)|\le M$ for all $x\in[-1,1]$. Therefore
+    \[
+        |V_j-u''(x_j)|\le \frac{h^2}{24}(M+M)=\frac{M}{12}h^2.
+    \]
+    Let $K:=\frac{M}{12}$, then take the maximum over interior indices:
+    \[
+        \max_{1\le j\le n}|V_j-u''(x_j)|\le Kh^2.
+    \]
+    So the differentiation matrix is second-order accurate in $\|\cdot\|_\infty$.
+\end{document}
