@@ -110,11 +110,22 @@ legend('Exact', 'Numerical');
 
 
 %% Question 5
-% Numerical evidence of quadratic convergence for f(x)=cosh(x)+cos(x)-3 (γ=3)
-% Using newton.m to show e_{k+1} ≈ C * e_k^2 asymptotically. 
+% Test the Forward Euler function
+f = @(t, y) y;
+tspan = [0, 1];
+y0 = 1;
+nsteps = 10;
+[t, y] = ForwardEuler(f, tspan, y0, nsteps);
 
+% exact result
+exact = exp(t);
 
-%% Question 4(c)
+% plot
+figure;
+plot(t, y, 'bo-', t, exact, 'r-');
+legend('Forward Eular', 'Exact');
+
+%% Question 6
 
 %%
 % The plot shows the residuals |f(x_k)| versus iteration k for γ = 2 and γ = 3.
