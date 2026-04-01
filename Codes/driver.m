@@ -24,6 +24,7 @@ V = D*U;
 % u(x) = cos(πx/2), u''(x) = -(π^2/4)cos(πx/2)
 exact = -(pi^2/4)*cos(pi*x/2);
 
+figure;
 plot(x, exact, 'b-', x, V, 'ro');
 legend('exact', 'approximation');
 %% Question 3
@@ -86,6 +87,27 @@ x = -1 + (1:n)' * h; % internal vector point
 % build matrix
 % central dfference formula: u''(xi) ≈ (u(xi-1) - 2u(xi) + u(xi+1))/h^2
 D = (diag(ones(n-1,1),1) + diag(-2*ones(n,1)) + diag(ones(n-1,1),-1)) * (1/h^2);
+
+% u''(x) = -f(x)
+f = @(x) pi^2 * exp(cos(pi*x)) .* (cos(pi*x) - sin(pi*x).^2);
+u_2 = -f(x);
+
+% D * U = u_2, use backslach command
+U = D \ u_2;
+
+% u(x) = ecos(πx) − 1/e
+excat = exp(cos(pi*x)) - 1/exp(1);
+
+% error
+error = max(abs(U - excat));
+fprintf('Max error: %.2e\n', error);
+
+
+% plot
+figure;
+plot(x, excat, 'b-', x, U, 'ro');
+legend('Exact', 'Numerical');
+
 
 %% Question 4(b)
 % Numerical evidence of quadratic convergence for f(x)=cosh(x)+cos(x)-3 (γ=3)
