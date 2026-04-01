@@ -109,7 +109,7 @@ plot(x, excat, 'b-', x, U, 'ro');
 legend('Exact', 'Numerical');
 
 
-%% Question 4(b)
+%% Question 5
 % Numerical evidence of quadratic convergence for f(x)=cosh(x)+cos(x)-3 (γ=3)
 % Using newton.m to show e_{k+1} ≈ C * e_k^2 asymptotically. 
 
