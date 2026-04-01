@@ -5,13 +5,87 @@ clear all, close all, clc, format short e;
 % Pen-and-paper proof is written in LaTeX report.
 
 %% Question 2
+% Approximate u'' for u(x)=cos(pi*x/2), n=100.
 
+n = 100; 
+h = 2 / (n+1);  % Spacing
+x = -1 + (1:n)' * h; % internal vector point
 
+% build matrix
+% central dfference formula: u''(xi) ≈ (u(xi-1) - 2u(xi) + u(xi+1))/h^2
+D = (diag(ones(n-1,1),1) + diag(-2*ones(n,1)) + diag(ones(n-1,1),-1)) * (1/h^2);
+
+% build U
+U = cos(pi*x/2);
+
+% obtain the approximation
+V = D*U;
+
+% u(x) = cos(πx/2), u''(x) = -(π^2/4)cos(πx/2)
+exact = -(pi^2/4)*cos(pi*x/2);
+
+plot(x, exact, 'b-', x, V, 'ro');
+legend('exact', 'approximation');
 %% Question 3
+% set n list that satisfies h half-decreasing, so according the O(h^2), the
+% error should be reduced to 1/4
+n_list = [4,9,19,39,79,159,319,639];
+errors = zeros(size(n_list));
+% expected_ratio = 1/4;
 
+for i = 1:length(n_list)
+    n = n_list(i); 
+    h = 2 / (n+1);  % Spacing
+    x = -1 + (1:n)' * h; % internal vector point
+    
+    % build matrix
+    % central dfference formula: u''(xi) ≈ (u(xi-1) - 2u(xi) + u(xi+1))/h^2
+    D = (diag(ones(n-1,1),1) + diag(-2*ones(n,1)) + diag(ones(n-1,1),-1)) * (1/h^2);
+    
+    % build U
+    U = cos(pi*x/2);
+    
+    % obtain the approximation
+    V = D*U;
+    
+    % u(x) = cos(πx/2), u''(x) = -(π^2/4)cos(πx/2)
+    exact = -(pi^2/4)*cos(pi*x/2);
 
-%% Question 4(a)
+    % max error
+    errors(i) = max(abs(V-exact));
+end
 
+h_list = 2./(n_list+1);
+error_ratio = errors(1:end-1) ./ errors(2:end);
+expected_ratio = (h_list(1:end-1)./h_list(2:end)).^2;
+
+% plot
+figure;
+loglog(h_list, errors, 'bo-', 'LineWidth', 2);
+hold on;
+loglog(h_list, errors(1)* (h_list/h_list(1)).^2, 'r--', 'LineWidth', 2);
+xlabel('h');
+ylabel('Maximum Error');
+legend('Numerical Error', 'O(h^2) Reference', 'Location', 'best');
+
+% print
+fprintf('h \t\t Error \t\t Error Ratio \t Excepted Ratio \n');
+for i = 1:length(n_list)
+    if i < length(n_list)
+        fprintf('%.4f \t\t %.2e \t\t %.2f \t\t %.2f \n', h_list(i), errors(i), error_ratio(i),  expected_ratio(i));
+    else
+        fprintf('%.4f \t\t %.2e \t\t - \t\t - \n', h_list(i), errors(i));
+    end
+end
+
+%% Question 4
+n = 100; 
+h = 2 / (n+1);  % Spacing
+x = -1 + (1:n)' * h; % internal vector point
+
+% build matrix
+% central dfference formula: u''(xi) ≈ (u(xi-1) - 2u(xi) + u(xi+1))/h^2
+D = (diag(ones(n-1,1),1) + diag(-2*ones(n,1)) + diag(ones(n-1,1),-1)) * (1/h^2);
 
 %% Question 4(b)
 % Numerical evidence of quadratic convergence for f(x)=cosh(x)+cos(x)-3 (γ=3)
