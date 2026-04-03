@@ -138,7 +138,6 @@ tspan = [t0, T];
 
 % set time step for test
 nsteps_list = [5, 10, 20, 40, 80, 160, 320];
-error = zeros(length(nsteps_list), 1);
 % time step size
 tss_list = zeros(length(nsteps_list), 1);
 
@@ -154,10 +153,6 @@ for i = 1:length(nsteps_list)
     u_exact = exp(-3*tHist/2) .* (cos(tHist/2) + 2* sin(tHist/2));
     v_exact = exp(-3*tHist/2) .* (-1/2*cos(tHist/2) - 7/2* sin(tHist/2));
     uHist_exact = [u_exact, v_exact];
-
-    % calcu error
-    error = max(max(abs(uHist - uHist_exact)));
-    errors(i) = error;
 end
 
 % plot for u_exat
@@ -182,8 +177,54 @@ title('v(t)')
 % Pen-and-paper proof is written in LaTeX report.
 
 %% Question 8
+% set the ode
+A = [0, 1; -5/2, -3];
+g = @(t) [0; 0];
 
+% inital condition
+u0 = [1; -1/2];
+t0 = 0;
+T = 1;
+tspan = [t0, T];
+
+% set time step for test
+nsteps_list = [5, 10, 20, 40, 80, 160, 320];
+% time step size
+tss_list = zeros(length(nsteps_list), 1);
+
+for i = 1:length(nsteps_list)
+    nsteps = nsteps_list(i);
+    tss = (T-t0) / nsteps;
+    tss_list(i) = tss;
+
+    % call ForwardEuler
+    [tHist, uHist]= CrankNicholson(A, g, tspan, u0, nsteps);
+
+    %calcu u(t) and v(t)
+    u_exact = exp(-3*tHist/2) .* (cos(tHist/2) + 2* sin(tHist/2));
+    v_exact = exp(-3*tHist/2) .* (-1/2*cos(tHist/2) - 7/2* sin(tHist/2));
+    uHist_exact = [u_exact, v_exact];
+end
+
+% plot for u_exat
+figure;
+hold on;
+plot(tHist, uHist(:, 1), 'b-', 'LineWidth', 1.5);
+hold on
+plot(tHist, u_exact, 'ro', 'MarkerSize', 3);
+legend('Forward Eular', 'Exact');
+title('u(t)')
+
+% plot for v_exat
+figure;
+hold on;
+plot(tHist, uHist(:, 2), 'b-', 'LineWidth', 1.5);
+hold on
+plot(tHist, v_exact, 'ro', 'MarkerSize', 3);
+legend('Forward Eular', 'Exact');
+title('v(t)')
 %% Question 9
+
 
 %% Question 10
 

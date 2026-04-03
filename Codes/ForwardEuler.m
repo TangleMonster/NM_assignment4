@@ -2,13 +2,13 @@ function [tHist, uHist] = ForwardEuler(f, tspan, u0, nsteps)
 % FORWARDEULER  Forward Euler method for solving ODEs
 % y'(t) = f(t, y(t)) for t in [t0, T] with initial condition y(t0)=y0.
 % Inputs:
-%       a function handle f for the function f of (3);
-%       a 2-vector tspan, with components t0 and T;
-%       a p × 1 vector u0, containing the initial condition y0;
-%       the number of steps nteps to be taken;
+%       f: a function handle f for the function f of (3);
+%       tspan: a 2-vector tspan, with components t0 and T;
+%       u0: a p × 1 vector u0, containing the initial condition y0;
+%       nsteps: the number of steps nteps to be taken;
 % Outputs:
-%       an (m + 1) × 1 vector tHist, storing the approximation times ti
-%       an (m + 1) × p matrix uHist, whose nth row stores the approximation ui ≈ y(ti) ∈ Rp
+%       tHist: an (m + 1) × 1 vector tHist, storing the approximation times ti
+%       uHist: an (m + 1) × p matrix uHist, whose nth row stores the approximation ui ≈ y(ti) ∈ Rp
     
     % check input
     if nargin < 4

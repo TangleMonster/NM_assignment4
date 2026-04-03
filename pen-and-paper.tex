@@ -69,5 +69,40 @@
         Bu_{i+1} = Lu_{i} + f_{i}
     \]
 
+    \section*{Question 9:}
+    First Forward Euler: $U_{k+1} = U_{k} + {\tau}DU_{k})$ => $(I + {\tau}D)U_{k}$, so the iteration martix is $M = I + {\tau}D$.
+    If Forward Euler is stable, all absolute value of eigenvalue in martix M must less than 1. So the eigenvalue $\mu_j$ that $\mu_j = 1 + \tau \lambda_j$ satisfied
+    \begin{align*}
+        |\mu_j| < 1 \\
+        => \qquad |1 + \tau \lambda_j| < 1 \\
+        => \qquad -1 < 1 + \tau \lambda_j < 1\\
+        => \qquad -2 < \tau \lambda_j < 0
+    \end{align*}
+    Since
+    \[
+        \lambda_j = -\frac{4}{h^2}\sin^2\left(\frac{j\pi}{2(n+1)}\right)
+    \]
+    that $\lambda_j$ is always negative, so $\tau \lambda_j < 0$ always satified.\\
+    Then we get
+    \[
+       \tau < -\frac{2}{\lambda_j}
+    \]
+    Next calcu the min value of the right side:
+    \[
+        \tau < \min_j\left( -\frac{2}{\lambda_j}\right)
+    \]
+    \[
+        \qquad => \qquad \max_j |\lambda_j| = \max_j \left|-\frac{4}{h^2}\sin^2\left(\frac{j\pi}{2(n+1)}\right)\right| = \max_j \left[\frac{4}{h^2}\sin^2\left(\frac{j\pi}{2(n+1)}\right)\right]
+    \]
+    It meet the max when $j=n$, and $\max_n\left(\sin^2\left(\frac{n\pi}{2(n+1)}\right)\right) = 1$\\
+    Thus,
+    \[
+        \max_j |\lambda_j| = \frac{4}{h^2} \qquad=>\qquad  \tau < -\frac{2}{-\frac{4}{h^2}} \qquad=>\qquad \tau < \frac{h^2}{2}
+    \]
+    In conclusion, the Forward Euler scheme for the heat conduction equation is conditionally stable, provided that the time step satisfies $\tau < \frac{h^2}{2}$
+
+
+
+
 
 \end{document}
