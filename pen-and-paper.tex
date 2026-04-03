@@ -10,21 +10,21 @@
 % Document
 \begin{document}
     \section*{Question 1}
-    Let
+    First let
     \[
         x_j=-1+jh,\qquad h=\frac{2}{n+1},\qquad j=0,1,\dots,n+1,
     \]
-    and let $u\in C^4([-1,1])$ with $u(-1)=u(1)=0$.
-    For interior nodes $j=1,\dots,n$, define
+    and let $u\in C^4([-1,1])$ with $u(-1)=u(1)=0$, defining
     \[
-        V_j:=\frac{u(x_{j-1})-2u(x_j)+u(x_{j+1})}{h^2}.
+        V_j:=\frac{u(x_{j-1})-2u(x_j)+u(x_{j+1})}{h^2}, \qquad j=1,\dots,n
     \]
-    Using Taylor expansion around xj,
+    Then using Taylor expansion around xj,
     \begin{align*}
         u(x_{j+1}) &= u(x_j)+h u'(x_j)+\frac{h^2}{2}u''(x_j)+\frac{h^3}{6}u^{(3)}(x_j)+\frac{h^4}{24}u^{(4)}(\xi_j^+),\\
         u(x_{j-1}) &= u(x_j)-h u'(x_j)+\frac{h^2}{2}u''(x_j)-\frac{h^3}{6}u^{(3)}(x_j)+\frac{h^4}{24}u^{(4)}(\xi_j^-),
     \end{align*}
-    for some $\xi_j^\pm$ between $x_{j-1}$ and $x_{j+1}$. Adding both lines and subtracting $2u(x_j)$ gives
+    for some $\xi_j^\pm$ between $x_{j-1}$ and $x_{j+1}$.\\
+    Then adding both lines and subtracting $2u(x_j)$
     \[
         u(x_{j-1})-2u(x_j)+u(x_{j+1})=h^2u''(x_j)+\frac{h^4}{24}\big(u^{(4)}(\xi_j^-)+u^{(4)}(\xi_j^+)\big).
     \]
@@ -37,9 +37,37 @@
     \[
         |V_j-u''(x_j)|\le \frac{h^2}{24}(M+M)=\frac{M}{12}h^2.
     \]
-    Let $K:=\frac{M}{12}$, then take the maximum over interior indices:
+    Let $K=\frac{M}{12}$, then take the maximum over interior indices:
     \[
         \max_{1\le j\le n}|V_j-u''(x_j)|\le Kh^2.
     \]
     So the differentiation matrix is second-order accurate in $\|\cdot\|_\infty$.
+
+    \section*{Question 7:}
+    First Crank-Nicholson scheme:
+    \[
+        u_{i+1} = u_i + \frac{\tau}{2}\left[f(t_{i+1}, u_{i+1}) + f(t_i, u_i)\right]
+    \]
+    then substitute $f(t,y) = Ay + g(t)$, that
+    \[
+        u_{i+1} = u_i + \frac{\tau}{2}\left[Au_{i+1} + g(t_{i+1}) + Au_i + g(t_i)\right]
+    \]
+    then rearrange the terms, put $u_{i+1}$ on left and $u_i$ on the right
+    \begin{align*}
+        u_{i+1} = u_i + \frac{\tau}{2}Au_{i+1} + \frac{\tau}{2}g(t_{i+1}) + \frac{\tau}{2}Au_i + \frac{\tau}{2}g(t_i) \\
+        => \qquad u_{i+1} - \frac{\tau}{2}Au_{i+1} = u_i + \frac{\tau}{2}Au_i + \frac{\tau}{2}g(t_{i+1})  + \frac{\tau}{2}g(t_i) \\
+        => \qquad (I-\frac{\tau}{2}A) u_{i+1} = (I+\frac{\tau}{2}A) u_i + \frac{\tau}{2}g(t_{i+1})  + \frac{\tau}{2}g(t_i)
+    \end{align*}
+    so we can extract:
+    \begin{align}
+        B = I - \frac{\tau}{2}A \\
+        L = I + \frac{\tau}{2}A \\
+        f_{i} = \frac{\tau}{2}[g{t_{i+1}} + g(t_{i})]
+    \end{align}
+    Thus, with the initial condition is $u_0 = y_0$, the Crank-Niocholson schmem can be written as:
+    \[
+        Bu_{i+1} = Lu_{i} + f_{i}
+    \]
+
+
 \end{document}

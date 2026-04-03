@@ -177,26 +177,16 @@ hold on
 plot(tHist, v_exact, 'ro', 'MarkerSize', 3);
 legend('Forward Eular', 'Exact');
 title('v(t)')
-%%
-% The plot shows the residuals |f(x_k)| versus iteration k for γ = 2 and γ = 3.
-% For γ = 3 (orange curve), Initially the residuals first increase
-% (because the initial values are slightly farther away) and then decrease
-% rapidly, with the residuals dropping to ~1e-10 after 9 to 10
-% iterations. It agrees with the theoretical analysis in Q4(a,b), because
-% f'(x*) != 0 at the nonnegative root.
-%
-% For γ = 2 (blue curve), the residuals decrease much more slowly and
-% approximately linearly on the logarithmic scale. This behavior confirms
-% *linear convergence*, since the derivative at the root is zero (f'(0) =
-% 0), violating the assumption required for quadratic convergence.
-%
-% Hence, the numerical results fully support the theoretical prediction:
-% Newton's method converges quadratically when f'(x*) != 0 (γ = 3) and only
-% linearly when f'(x*) = 0 (γ = 2).
 
-%% Question 5
-% See secant.m
+%% Question 7
+% Pen-and-paper proof is written in LaTeX report.
 
-%% Question 6
+%% Question 8
 
-%% 
+%% Question 9
+
+%% Question 10
+
+%% Question 11
+
+%% Question 12
