@@ -102,6 +102,61 @@
     In conclusion, the Forward Euler scheme for the heat conduction equation is conditionally stable, provided that the time step satisfies $\tau < \frac{h^2}{2}$
 
 
+    \section*{Question 10:}
+    First we got
+     \[
+        B = I - \frac{\tau}{2}A, \quad L = I + \frac{\tau}{2}A, \quad f_{i} = \frac{\tau}{2}[g{t_{i+1}} + g(t_{i})],
+     \]
+    from question 7, and in this question we have
+    \[
+        U'(t) = DU(t), \quad t \geq 0, \quad U(0) = \varphi,
+    \]
+    so that
+    \[
+        BU_{k+1} = LU_k, \quad B = I - \frac{\tau}{2}D, \quad L = I + \frac{\tau}{2}D,
+    \]
+    Since D and B has the same eigenvectors, the eigenvalues of B are:
+    \[
+        \beta_j = 1-\frac{\tau}{2}\lambda_j,
+    \]
+    Because $\lambda_j < 0$, $\beta_j > 1$ ($\beta_j \not= 0$ for all j) , so B is invertible. Then the linear system $BU_{k+1} = LU_k$ has unique solution at each step.
+    *Hence the Crank Nicholson scheme for the discretised heat equation is well-defined*.\\
+
+
+    2) The scheme is unconditionally asymptotically stable. \\
+
+
+    First the iteration matrix for the scheme is $M = B^{-1}L$. Using the given result, if $(\beta_{j}, z_{j})$ is an eigenpair for B and $(\gamma_j, z_j)$ an eigenpair of L (To avoid confusion, I use $\gamma$ to replace $\lambda$ in the question), then $(\beta^{-1}\gamma_{j},z_j)$ is an eigenpair of M.\\
+    The eigenvalues of L are:
+    \[
+        \gamma_j = 1 + \frac{\tau}{2}\lambda_j,
+    \]
+    therefore, the eigenvalues of M are:
+    \[
+        \mu_j = \frac{\gamma_j}{\beta_j} = \frac{1+\frac{\tau}{2}\lambda_j}{1-\frac{\tau}{2}\lambda_j}
+    \]
+    Second we need to proof that $|\mu_j| < 1$ for all $\tau > 0$:\\
+    Since $\lambda_j < 0$, we got
+    \[
+        \begin{gathered}
+            \frac{\tau}{2}\lambda_j < 0 \\
+            => 1 + \frac{\tau}{2}\lambda_j < 1 \\
+            => 1 - \frac{\tau}{2}\lambda_j > 1 \\
+            Thus \quad \mu_j = \frac{1+\frac{\tau}{2}\lambda_j}{1-\frac{\tau}{2}\lambda_j} < 1
+        \end{gathered}
+    \]
+    Then if $\mu_j > -1$:
+    \[
+        \begin{gathered}
+            \frac{1+\frac{\tau}{2}\lambda_j}{1-\frac{\tau}{2}\lambda_j} > -1 \\
+            => 1 + \frac{\tau}{2}\lambda_j > -(1 - \frac{\tau}{2}\lambda_j) \\
+            => 1 + \frac{\tau}{2}\lambda_j > \frac{\tau}{2}\lambda_j-1 \\
+            => 1 > -1
+        \end{gathered}
+    \]
+    Therefore, $\mu_j > -1$ always true.
+    Hence, $|\mu_j| < 1$ for all $\tau > 0$ that the scheme is unconditionally asymptotically stable.
+
 
 
 
